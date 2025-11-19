@@ -1,5 +1,6 @@
-import pygame
 import random
+
+import pygame
 
 # Game constants
 WIDTH, HEIGHT = 800, 600
@@ -30,7 +31,9 @@ def reset_ball(ball_rect, ball_vel, direction=None):
     direction: None (random), 1 (to the right), -1 (to the left)
     """
     ball_rect.center = (WIDTH // 2, HEIGHT // 2)
-    dir_x = random.choice([-1, 1]) if direction is None else (1 if direction > 0 else -1)
+    dir_x = (
+        random.choice([-1, 1]) if direction is None else (1 if direction > 0 else -1)
+    )
     # choose a non-zero y direction and clamp
     dir_y = random.uniform(-1, 1)
     while abs(dir_y) < 0.2:
@@ -56,9 +59,18 @@ def main():
     font = pygame.font.SysFont(None, 48)
 
     # Game objects
-    player = pygame.Rect(PADDLE_MARGIN, HEIGHT // 2 - PADDLE_HEIGHT // 2, PADDLE_WIDTH, PADDLE_HEIGHT)
-    ai = pygame.Rect(WIDTH - PADDLE_MARGIN - PADDLE_WIDTH, HEIGHT // 2 - PADDLE_HEIGHT // 2, PADDLE_WIDTH, PADDLE_HEIGHT)
-    ball = pygame.Rect(WIDTH // 2 - BALL_SIZE // 2, HEIGHT // 2 - BALL_SIZE // 2, BALL_SIZE, BALL_SIZE)
+    player = pygame.Rect(
+        PADDLE_MARGIN, HEIGHT // 2 - PADDLE_HEIGHT // 2, PADDLE_WIDTH, PADDLE_HEIGHT
+    )
+    ai = pygame.Rect(
+        WIDTH - PADDLE_MARGIN - PADDLE_WIDTH,
+        HEIGHT // 2 - PADDLE_HEIGHT // 2,
+        PADDLE_WIDTH,
+        PADDLE_HEIGHT,
+    )
+    ball = pygame.Rect(
+        WIDTH // 2 - BALL_SIZE // 2, HEIGHT // 2 - BALL_SIZE // 2, BALL_SIZE, BALL_SIZE
+    )
     ball_vel = [0, 0]
     reset_ball(ball, ball_vel, direction=random.choice([-1, 1]))
 
@@ -126,7 +138,9 @@ def main():
         elif ball.left > WIDTH:
             # Player scores
             player_score += 1
-            reset_ball(ball, ball_vel, direction=-1)  # serve to the left (towards Player)
+            reset_ball(
+                ball, ball_vel, direction=-1
+            )  # serve to the left (towards Player)
 
         # Drawing
         screen.fill(BLACK)
